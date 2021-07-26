@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./ProgressBarSolution.scss";
 
 const ProgressBarSolution = () => {
-  const totalRequestTime = 20;
+  const defaultHoldTime = 15; //Defining the time for the progress to hold until request finishes
+  const docStyle = document.documentElement.style;
 
-  const [seconds, setSeconds] = useState(0);
-  const [intervalID, setIntervalId] = useState();
-  const [isRunning, setIsRunning] = useState(false);
-  const [allowCancel, setAllowCancel] = useState(false);
+  const [seconds, setSeconds] = useState(0); // Traking request time
+  const [intervalID, setIntervalId] = useState(); // Id of the mocked request interval
+  const [isRunning, setIsRunning] = useState(false); // To handle the bar's animation
+  const [allowCancel, setAllowCancel] = useState(false); // Display the Finish request button
 
   useEffect(() => {
     setIsRunning(seconds > 0);
   }, [seconds]);
-
-  const docStyle = document.documentElement.style;
 
   const reset = () => {
     docStyle.removeProperty("--minWidth");
@@ -21,6 +20,7 @@ const ProgressBarSolution = () => {
     docStyle.removeProperty("--maxWidth");
     setSeconds(0);
   };
+
   return (
     <div>
       {/* START REQUEST BUTTON */}
@@ -36,7 +36,7 @@ const ProgressBarSolution = () => {
 
           // Set up the default time duration for the request
           // In this case we want it to be a little over 15 s
-          docStyle.setProperty("--seconds", `${totalRequestTime}s`);
+          docStyle.setProperty("--seconds", `${defaultHoldTime}s`);
 
           // Setting the interval for each second passed
           // this will allow us to manage the time duration of the request
@@ -50,7 +50,7 @@ const ProgressBarSolution = () => {
           //For a rear request we could handle a message or retry the request.
           setTimeout(() => {
             clearInterval(interval);
-          }, totalRequestTime * 1000);
+          }, defaultHoldTime * 1000);
         }}
       >
         {allowCancel ? `Loading... ${seconds}` : "Start Request"}
@@ -61,7 +61,9 @@ const ProgressBarSolution = () => {
         <button
           className="btn cancel"
           onClick={() => {
+            // Hide the cancel button
             setAllowCancel(false);
+            // Clear the interval of the mocked request
             clearInterval(intervalID);
 
             const innerBar = getComputedStyle(
@@ -69,10 +71,13 @@ const ProgressBarSolution = () => {
             );
             const innerBarWidth = innerBar.getPropertyValue("width");
 
+            // Setting the progress bar variables according to the current state
             docStyle.setProperty("--minWidth", `${innerBarWidth}px`);
             docStyle.setProperty("--seconds", "1s");
             docStyle.setProperty("--maxWidth", "0%");
 
+            // Reset after 3 seconds
+            // Setting the seconds to 0 will remove the progress bar from the screen
             setTimeout(reset, 3000);
           }}
         >
