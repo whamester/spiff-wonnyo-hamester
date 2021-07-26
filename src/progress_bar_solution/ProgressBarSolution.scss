@@ -23,6 +23,7 @@
   &:active {
     border-width: 3px;
   }
+
   &:disabled {
     pointer-events: none;
     opacity: 0.5;
@@ -39,37 +40,42 @@
   .progress-bar-child {
     width: 100%;
     height: 100%;
-  }
 
-  .progress {
-    color: $white;
-    animation-direction: reverse;
-    background: $sunset;
-    background: linear-gradient(to right, $sunset 0%, $sunrise 45%, $red 100%);
-  }
-
-  .shrinker {
-    background-color: $gray;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-  }
-
-  .timelapse {
-    animation-name: timelapse;
-    animation-fill-mode: forwards;
-    animation-duration: var(--seconds, 5s);
-    // animation-timing-function: cubic-bezier(0.86, 0.05, 0.4, 0.96);
-    // animation-timing-function: cubic-bezier(0.1, 0.1, 0.1, 0.1); //TODO: For setting up the array breakpoints
-  }
-
-  @keyframes timelapse {
-    0% {
-      width: var(--minWidth, 100%);
+    &.progress {
+      color: $white;
+      animation-direction: reverse;
+      background: $sunset;
+      background: linear-gradient(
+        to right,
+        $sunset 0%,
+        $sunrise 45%,
+        $red 100%
+      );
     }
-    100% {
-      width: var(--maxWidth, 10%);
+
+    &.shrinker {
+      background-color: $gray;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+    }
+
+    &.timelapse {
+      animation-name: timelapse;
+      animation-fill-mode: forwards;
+      animation-duration: var(--seconds, 5s);
+      // animation-timing-function: cubic-bezier(0.86, 0.05, 0.4, 0.96);
+      // animation-timing-function: cubic-bezier(0.1, 0.1, 0.1, 0.1); //TODO: For setting up the array breakpoints
+    }
+
+    @keyframes timelapse {
+      0% {
+        width: var(--minWidth, 100%);
+      }
+      100% {
+        width: var(--maxWidth, 10%);
+      }
     }
   }
 }
