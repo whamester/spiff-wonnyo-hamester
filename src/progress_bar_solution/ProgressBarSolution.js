@@ -7,12 +7,7 @@ const ProgressBarSolution = () => {
 
   const [seconds, setSeconds] = useState(0); // Traking request time
   const [intervalID, setIntervalId] = useState(); // Id of the mocked request interval
-  const [isRunning, setIsRunning] = useState(false); // To handle the bar's animation
   const [allowCancel, setAllowCancel] = useState(false); // Display the Finish request button
-
-  useEffect(() => {
-    setIsRunning(seconds > 0);
-  }, [seconds]);
 
   const reset = () => {
     docStyle.removeProperty("--minWidth");
@@ -25,7 +20,7 @@ const ProgressBarSolution = () => {
     <div>
       {/* START REQUEST BUTTON */}
       <button
-        disabled={isRunning}
+        disabled={seconds > 0}
         className="btn"
         onClick={() => {
           // Set the initial state
@@ -72,9 +67,9 @@ const ProgressBarSolution = () => {
             const innerBarWidth = innerBar.getPropertyValue("width");
 
             // Setting the progress bar variables according to the current state
-            docStyle.setProperty("--minWidth", `${innerBarWidth}px`);
+            docStyle.setProperty("--minWidth", `${innerBarWidth}`);
             docStyle.setProperty("--seconds", "1s");
-            docStyle.setProperty("--maxWidth", "0%");
+            docStyle.setProperty("--maxWidth", "100%");
 
             // Reset after 3 seconds
             // Setting the seconds to 0 will remove the progress bar from the screen
@@ -90,12 +85,9 @@ const ProgressBarSolution = () => {
         id="progress-bar-container"
         className={`progress-bar-container ${seconds === 0 ? "hidden" : ""}`}
       >
-        <div className="progress-bar-child progress"></div>
         <div
           id="progress-bar-child"
-          className={`progress-bar-child shrinker ${
-            isRunning ? "timelapse" : ""
-          }`}
+          className="progress-bar-child progress"
         ></div>
       </div>
     </div>
