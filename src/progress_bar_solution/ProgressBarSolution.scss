@@ -1,0 +1,139 @@
+@import "../shared_styles/colors.scss";
+
+.btn {
+  border: 1px solid $green;
+  background-color: $white;
+  border-radius: 25px;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: 0.1s;
+  color: $green;
+
+  &.cancel {
+    border-color: $red;
+    color: $red;
+  }
+
+  &:hover {
+    border-width: 2px;
+  }
+
+  &:active {
+    border-width: 3px;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.progress-bar-container {
+  height: 6px;
+  margin-top: 10px;
+  position: relative;
+  border-radius: 35px;
+  overflow: hidden;
+
+  .progress-bar-child {
+    width: 100%;
+    height: 100%;
+
+    &.progress {
+      background-color: $sunset;
+      background: linear-gradient(
+        to right,
+        $sunset 0%,
+        $sunrise 45%,
+        $red 100%
+      );
+      animation-name: progressBar;
+      animation-fill-mode: both;
+      animation-duration: var(--seconds, 15s);
+      animation-timing-function: ease-in;
+
+      @keyframes progressBar {
+        0% {
+          width: var(--minWidth, 0%);
+        }
+        100% {
+          width: var(--maxWidth, 80%);
+        }
+      }
+    }
+  }
+}
+
+.switch-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  float: right;
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 20px;
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      &:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      &:checked + .slider {
+        background-color: $green;
+      }
+
+      &:focus + .slider {
+        box-shadow: 0 0 1px $green;
+      }
+
+      &:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: $gray;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 13px;
+      width: 13px;
+      left: 4px;
+      bottom: 4px;
+      background-color: $white;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider.round {
+      border-radius: 20px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  }
+
+  .switch-text {
+    margin-left: 10px;
+  }
+}

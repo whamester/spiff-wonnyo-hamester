@@ -1,4 +1,5 @@
-ul, ol {
+ul,
+ol {
   li {
     padding: 4px 0;
   }
@@ -19,4 +20,8 @@ body {
 
 .block {
   padding: 20px 0;
+}
+
+.hidden {
+  display: none;
 }
