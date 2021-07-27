@@ -1,0 +1,67 @@
+@import "../shared_styles/colors.scss";
+
+.btn {
+  border: 1px solid $green;
+  background-color: $white;
+  border-radius: 25px;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: 0.1s;
+  color: $green;
+
+  &.cancel {
+    border-color: $red;
+    color: $red;
+  }
+
+  &:hover {
+    border-width: 2px;
+  }
+
+  &:active {
+    border-width: 3px;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.progress-bar-container {
+  height: 6px;
+  margin-top: 10px;
+  position: relative;
+  border-radius: 35px;
+  overflow: hidden;
+
+  .progress-bar-child {
+    width: 100%;
+    height: 100%;
+
+    &.progress {
+      background-color: $sunset;
+      background: linear-gradient(
+        to right,
+        $sunset 0%,
+        $sunrise 45%,
+        $red 100%
+      );
+      animation-name: progressBar;
+      animation-fill-mode: both;
+      animation-duration: var(--seconds, 15s);
+      animation-timing-function: ease-in;
+
+      @keyframes progressBar {
+        0% {
+          width: var(--minWidth, 0%);
+        }
+        100% {
+          width: var(--maxWidth, 80%);
+        }
+      }
+    }
+  }
+}
